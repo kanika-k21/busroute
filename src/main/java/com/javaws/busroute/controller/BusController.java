@@ -36,7 +36,7 @@ public class BusController {
         Bus bus = busService.fetchBusByRegistrationNumber(registrationNumber);
         List<ScheduleDTO> busRouteSchedules = busRouteScheduleService.findRouteSchedulesByBusId(bus.getId());
         BusDTO busDTO =  new BusDTO(bus.getId(), bus.getRegistrationNumber(), bus.getBusType(), busRouteSchedules);
-        return new ResponseEntity<>(busDTO, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(busDTO, HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteBus")
@@ -49,6 +49,8 @@ public class BusController {
     @PutMapping("/mapBusWithRoute")
     public ResponseEntity<BusDTO> mapBusWithRoute(@RequestBody BusRouteMap busRouteMap) {
         Bus bus = busService.fetchBusByRegistrationNumber(busRouteMap.getRegistrationNumber());
+
+//      checking if the current bus has any overlapping schedule
         busService.checkForOverlappingSchedule(bus, busRouteMap.getStartTime(), busRouteMap.getEndTime());
         Route route = routeService.fetchRouteByOriginAndDestination(busRouteMap.getOrigin(), busRouteMap.getDestination());
         BusRouteSchedule busRouteSchedule = busRouteScheduleService.mapBusWithRoute(bus, route, busRouteMap);

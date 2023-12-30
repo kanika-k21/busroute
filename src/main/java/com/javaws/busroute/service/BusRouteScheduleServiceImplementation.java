@@ -36,6 +36,7 @@ public class BusRouteScheduleServiceImplementation implements BusRouteScheduleSe
 
     private List<ScheduleDTO> constructScheduleDTOs(List<BusRouteSchedule> busRouteSchedules) {
         List<ScheduleDTO> scheduleDTOs = new ArrayList<>();
+//      to convert BusRouteSchedule model object to user friendly object
         for (BusRouteSchedule busRouteSchedule : busRouteSchedules) {
             RouteDTO routeDTO = new RouteDTO(busRouteSchedule.getRoute().getOrigin(), busRouteSchedule.getRoute().getDestination());
             TimingDTO timingDTO = new TimingDTO(busRouteSchedule.getStartTime(), busRouteSchedule.getEndTime());

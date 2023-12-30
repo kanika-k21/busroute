@@ -33,6 +33,7 @@ public class BusServiceImplementation implements BusService {
 
     @Override
     public Bus fetchBusByRegistrationNumber(String registrationNumber) {
+//      to check if a bus exists with the provided registrationNumber
         if (!busRepository.existsByRegistrationNumber(registrationNumber)) {
             throw new ResourceNotFoundException("No bus present with the given registrationNumber - " + registrationNumber);
         }
@@ -46,6 +47,7 @@ public class BusServiceImplementation implements BusService {
         for (BusRouteSchedule busRouteSchedule : busRouteSchedules) {
             Time existingStartTime = busRouteSchedule.getStartTime();
             Time existingEndTime = busRouteSchedule.getEndTime();
+//          to check conflict schedules if any
             if (!(endTime.before(existingStartTime) || startTime.after(existingEndTime))) {
                throw new BadRequestException("Provided bus has a conflicting schedule! Adjust the timings and reschedule!");
             }
