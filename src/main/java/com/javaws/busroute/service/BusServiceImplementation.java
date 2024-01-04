@@ -7,11 +7,13 @@ import com.javaws.busroute.model.Bus;
 import com.javaws.busroute.model.BusRouteSchedule;
 import com.javaws.busroute.repository.BusRepository;
 import com.javaws.busroute.repository.BusRouteScheduleRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Time;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BusServiceImplementation implements BusService {
@@ -26,6 +28,7 @@ public class BusServiceImplementation implements BusService {
         return busRepository.save(bus);
     }
 
+    @Transactional
     @Override
     public void deleteBusDetails(Bus bus) {
         busRepository.delete(bus);
@@ -33,11 +36,9 @@ public class BusServiceImplementation implements BusService {
 
     @Override
     public Bus fetchBusByRegistrationNumber(String registrationNumber) {
-//      to check if a bus exists with the provided registrationNumber
-        if (!busRepository.existsByRegistrationNumber(registrationNumber)) {
-            throw new ResourceNotFoundException("No bus present with the given registrationNumber - " + registrationNumber);
-        }
-        return busRepository.findByRegistrationNumber(registrationNumber);
+        Optional<Bus> bus = busRepository.findByRegistrationNumber(registrationNumber);
+
+        return bus.orElseThrow(() -> new ResourceNotFoundException("No bus present with the given registrationNumber - " + registrationNumber));
     }
 
     @Override

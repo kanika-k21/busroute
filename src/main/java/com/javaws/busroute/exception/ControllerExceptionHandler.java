@@ -1,6 +1,7 @@
 package com.javaws.busroute.exception;
 
 import com.javaws.busroute.dto.ErrorMessage;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -25,5 +26,11 @@ public class ControllerExceptionHandler {
                 HttpStatus.BAD_REQUEST.value(),
                 ex.getMessage(),
                 request.getDescription(false));
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorMessage handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request) {
+        return new ErrorMessage(HttpStatus.CONFLICT.value(), "Duplicate key violation: " + ex.getMessage(), request.getDescription(false));
     }
 }
