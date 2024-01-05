@@ -21,7 +21,7 @@ public class Bus {
     @NotNull
     private BusType busType;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bus", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "bus", cascade = CascadeType.ALL)
     private Set<BusRouteSchedule> busRouteSchedules;
 
     public Bus() {}

@@ -6,11 +6,14 @@ import com.javaws.busroute.repository.RouteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RouteServiceImplementation implements RouteService {
 
     @Autowired
     private RouteRepository routeRepository;
+
     public Route fetchRouteByOriginAndDestination(String origin, String destination) {
 //      since routes are static preloaded data, checking if any route exists with the given origin and destination
         if (!routeRepository.existsByOriginAndDestination(origin, destination)) {
@@ -19,4 +22,8 @@ public class RouteServiceImplementation implements RouteService {
         return routeRepository.findByOriginAndDestination(origin, destination);
     }
 
+    @Override
+    public List<Route> findAllRoutes() {
+        return routeRepository.findAll();
+    }
 }
