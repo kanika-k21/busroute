@@ -30,7 +30,8 @@ public class BusServiceImplementation implements BusService {
 
     @Transactional
     @Override
-    public void deleteBusDetails(Bus bus) {
+    public void deleteBusDetails(BusDTO busDTO) {
+        Bus bus = this.fetchBusByRegistrationNumber(busDTO.getRegistrationNumber());
         busRepository.delete(bus);
     }
 

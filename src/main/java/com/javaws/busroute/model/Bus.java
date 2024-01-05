@@ -1,12 +1,8 @@
 package com.javaws.busroute.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Set;
 
@@ -25,8 +21,8 @@ public class Bus {
     @NotNull
     private BusType busType;
 
-    @OneToMany(mappedBy = "bus", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    Set<BusRouteSchedule> busRouteSchedules;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bus", cascade = CascadeType.ALL)
+    private Set<BusRouteSchedule> busRouteSchedules;
 
     public Bus() {}
     public Bus(String registrationNumber, BusType busType) {

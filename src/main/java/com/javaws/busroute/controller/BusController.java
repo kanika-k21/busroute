@@ -64,8 +64,7 @@ public class BusController {
             throw new BadRequestException(violations.iterator().next().getMessage());
         }
 
-        Bus bus = busService.fetchBusByRegistrationNumber(busDTO.getRegistrationNumber());
-        busService.deleteBusDetails(bus);
+        busService.deleteBusDetails(busDTO);
 
         return ResponseEntity.ok().body(Map.of("message", "Bus details deleted successfully"));
     }

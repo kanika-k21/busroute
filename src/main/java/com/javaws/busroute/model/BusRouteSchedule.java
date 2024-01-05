@@ -16,7 +16,7 @@ public class BusRouteSchedule {
     private Time startTime;
     private Time endTime;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "bus_id")
     private Bus bus;
 

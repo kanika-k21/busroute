@@ -7,7 +7,7 @@ import java.sql.Time;
 
 public interface BusService {
     Bus addBusDetails(BusDTO busDTO);
-    void deleteBusDetails(Bus bus);
+    void deleteBusDetails(BusDTO busDTO);
     Bus fetchBusByRegistrationNumber(String registrationNumber);
     void checkForOverlappingSchedule(Bus bus, Time startTime, Time endTime);
 }
